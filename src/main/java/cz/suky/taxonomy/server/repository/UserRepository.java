@@ -7,4 +7,5 @@ import cz.suky.taxonomy.server.entity.User;
  */
 public interface UserRepository extends AbstractEntityRepository<User> {
 
+    User findByUserNameAndPassword(String username, String password);
 }

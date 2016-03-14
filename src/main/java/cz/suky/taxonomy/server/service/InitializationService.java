@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityNotFoundException;
 
 /**
  * Created by none_ on 03/13/16.
@@ -18,6 +17,7 @@ public class InitializationService {
     private ConfigurationService configurationService;
     private ConfigurationRepository configurationRepository;
     private UserRepository userRepository;
+    private TaxonService taxonService;
 
     @Autowired
     public void setConfigurationService(ConfigurationService configurationService) {
@@ -34,20 +34,29 @@ public class InitializationService {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    public void setTaxonService(TaxonService taxonService) {
+        this.taxonService = taxonService;
+    }
+
     @PostConstruct
     public void initApp() {
-         if (isInitialized()) {
-             return;
-         }
+        if (isInitialized()) {
+            return;
+        }
 
-        final User admin = new User();
+        User admin = new User();
         admin.setFirstName("admin");
         admin.setLastName("admin");
         admin.setUsername("admin");
         admin.setPassword("admin");
         admin.setRole(Role.ADMIN);
 
-        userRepository.save(admin);
+        admin = userRepository.save(admin);
+
+        final Taxon life = new Taxon();
+        life.setName("Life");
+        taxonService.save(admin, life);
 
         Configuration initializedConfig = getInitializedConfig();
         initializedConfig.setValue(Boolean.TRUE.toString());
@@ -57,16 +66,13 @@ public class InitializationService {
     private boolean isInitialized() {
         try {
             return configurationService.getBoolean(ConfigurationKey.DB_INITIALIZED);
-        } catch (EntityNotFoundException e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
     private Configuration getInitializedConfig() {
-        try {
-            return configurationRepository.findByKey(ConfigurationKey.DB_INITIALIZED);
-        } catch (EntityNotFoundException e) {
-            return new Configuration(ConfigurationKey.DB_INITIALIZED, ConfigurationType.BOOLEAN, Boolean.FALSE.toString());
-        }
+        Configuration config = configurationRepository.findByKey(ConfigurationKey.DB_INITIALIZED);
+        return config != null ? config : new Configuration(ConfigurationKey.DB_INITIALIZED, ConfigurationType.BOOLEAN, Boolean.FALSE.toString());
     }
 }

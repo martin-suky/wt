@@ -1,17 +1,17 @@
 {
-"name": "WT",
-"description": "World of Taxonomy",
-"version": "1.0.0-SNAPSHOT",
-"private": true,
-"dependencies": {
-    "react-router": "^2.0.1",
+  "name": "WT",
+  "description": "World of Taxonomy",
+  "version": "1.0.0-SNAPSHOT",
+  "private": true,
+  "dependencies": {
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
-},
-"devDependencies": {
-  "watchify": "~0.10.2"
-},
-"scripts": {
-  "start": "watchify js/app.js -o bundle.js -v -d js/app.js"
-}
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.1"
+  },
+  "devDependencies": {
+    "watchify": "~0.10.2"
+  },
+  "scripts": {
+    "start": "watchify js/index.js -o static/bundle.js -v -d js/index.js"
+  }
 }

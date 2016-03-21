@@ -2,4 +2,5 @@
 server.iml
 target
 src/main/webapp/node_modules
-src/main/webapp/**/*.js
+src/main/webapp/js/**/*.js
+bundle.js

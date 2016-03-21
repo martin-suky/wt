@@ -26,6 +26,7 @@
     ],
     "files": [
         "interfaces.d.ts",
-        "app.tsx"
+        "components/WtApp.tsx",
+        "index.tsx"
     ]
 }

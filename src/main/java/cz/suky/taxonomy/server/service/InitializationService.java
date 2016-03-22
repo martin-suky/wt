@@ -2,11 +2,13 @@ package cz.suky.taxonomy.server.service;
 
 import cz.suky.taxonomy.server.entity.*;
 import cz.suky.taxonomy.server.repository.ConfigurationRepository;
+import cz.suky.taxonomy.server.repository.TaxonRepository;
 import cz.suky.taxonomy.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 
 /**
  * Created by none_ on 03/13/16.
@@ -17,7 +19,7 @@ public class InitializationService {
     private ConfigurationService configurationService;
     private ConfigurationRepository configurationRepository;
     private UserRepository userRepository;
-    private TaxonService taxonService;
+    private TaxonRepository taxonRepository;
 
     @Autowired
     public void setConfigurationService(ConfigurationService configurationService) {
@@ -35,8 +37,8 @@ public class InitializationService {
     }
 
     @Autowired
-    public void setTaxonService(TaxonService taxonService) {
-        this.taxonService = taxonService;
+    public void setTaxonService(TaxonRepository taxonRepository) {
+        this.taxonRepository = taxonRepository;
     }
 
     @PostConstruct
@@ -56,7 +58,11 @@ public class InitializationService {
 
         final Taxon life = new Taxon();
         life.setName("Life");
-        taxonService.save(admin, life);
+        life.setCreated(LocalDateTime.now());
+        life.setUpdated(LocalDateTime.now());
+        life.setCreatedBy(admin);
+        life.setUpdatedBy(admin);
+        taxonRepository.save(life);
 
         Configuration initializedConfig = getInitializedConfig();
         initializedConfig.setValue(Boolean.TRUE.toString());

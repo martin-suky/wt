@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
  * Created by none_ on 03/13/16.
  */
 @MappedSuperclass
-public class AbstractEntity {
+public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue

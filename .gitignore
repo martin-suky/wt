@@ -1,6 +1,6 @@
 .idea
 server.iml
 target
-src/main/webapp/node_modules
-src/main/webapp/js/**/*.js
+src/main/resources/public/node_modules
+src/main/resources/public/js/**/*.js
 bundle.js

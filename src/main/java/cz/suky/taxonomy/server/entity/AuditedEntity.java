@@ -1,13 +1,19 @@
 package cz.suky.taxonomy.server.entity;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**
  * Created by none_ on 03/13/16.
  */
-public class AuditedEntity extends AbstractEntity {
+@MappedSuperclass
+public abstract class AuditedEntity extends AbstractEntity {
+
+    @ManyToOne
     private User createdBy;
 
+    @ManyToOne
     private User updatedBy;
 
     private LocalDateTime created;

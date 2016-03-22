@@ -6,7 +6,6 @@ import cz.suky.taxonomy.server.entity.ConfigurationType;
 import cz.suky.taxonomy.server.repository.ConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.plugin.dom.exception.InvalidStateException;
 
 /**
  * Created by none_ on 03/13/16.
@@ -54,7 +53,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             case INTEGER:
                 return (T) Integer.valueOf(config.getValue());
             default:
-                throw new InvalidStateException("Type " + config.getType() + " not supported.");
+                throw new IllegalArgumentException("Type " + config.getType() + " not supported.");
         }
     }
 }
